@@ -21,7 +21,7 @@
                             &key code state window root-x root-y child
                             &allow-other-keys)
   (format *standard-output*
-          "Button Press: Code=~A X=~A Y=~A ~%"
+          "~%[Button Press] Code=~A X=~A Y=~A"
           code root-x root-y)
   (force-output)
   (case code
@@ -34,7 +34,7 @@
                             &key code state window root-x root-y child
                             &allow-other-keys)
   (format *standard-output*
-          "Button Release: Code=~A X=~A Y=~A ~%"
+          "~%[Button Release] Code=~A X=~A Y=~A"
           code root-x root-y)
   (force-output)
   (case code
@@ -52,10 +52,23 @@
                          &allow-other-keys)
   (declare (ignore event-slots))
   (format *standard-output*
-          "[Key Press] Code=~A Root=~A State=~A~%"
+          "~%[Key Press] Code=~A Root=~A State=~A~%"
           code root state)
   (run-shell-command "/usr/bin/xterm" '() :wait nil)
   (force-output))
+
+
+
+(defun handle-create-notify (&rest event-slots &key root code state
+                             &allow-other-keys)
+  (declare (ignore event-slots))
+  (format *standard-output*
+          "~%[Create Notify] Code=~A Root=~A State=~A~%"
+          code root state)
+  (force-output))
+
+
+
 
 
 

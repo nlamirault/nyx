@@ -22,12 +22,13 @@
   (declare (ignore display))
   (with-xlib-protect
     (format *standard-output*
-            "Event key : ~A~%" event-key)
+            "~%Event key : ~A~%" event-key)
     (force-output)
     (case event-key
       (:button-press (apply #'handle-button-press event-slots))
       (:button-release (apply #'handle-button-release event-slots))
       (:key-press (apply #'handle-key-press event-slots))
+      (:create-notify (apply #'handle-create-notify event-slots))
       (t))))
         
 
@@ -37,6 +38,12 @@
          (screen (xlib:display-default-screen dpy))
          (root (xlib:screen-root screen))
          )
+    (setf (xlib:window-event-mask root)
+          (xlib:make-event-mask :button-press
+                                :button-release
+                                :key-press
+                                :key-release)
+          (xlib:window-border root) 5)
     (create-x-window dpy screen (random 800) (random 800) 100 100)
     (if threaded-p
         (setf *wm-thread*

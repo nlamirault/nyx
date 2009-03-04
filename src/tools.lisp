@@ -57,7 +57,8 @@
                                               :exposure 
                                               :pointer-motion)
                                 :x x :y y :width width :height height
-                                :border-width 8))
+                                ;;:border-width 8))
+                                ))
 ;;;          (gc (xlib:create-gcontext :drawable (xlib:screen-root screen)
 ;;;                                    :foreground white
 ;;;                                    :background black)))
@@ -70,3 +71,16 @@
     (xlib:display-finish-output display)
     w))
     
+
+
+;; Stolen from Eclipse
+(defun xwin-send-configuration-notify (xwin x y w h bw)
+  "Send a synthetic configure notify event to the given window (ICCCM 4.1.5)"
+  (xlib:send-event xwin :configure-notify nil
+                   :event-window xwin
+                   :window xwin
+                   :x x :y y
+                   :width w
+                   :height h
+                   :border-width bw
+                   :propagate-p nil))
