@@ -34,5 +34,6 @@
                (:file "specials" :depends-on ("package"))
                (:file "tools" :depends-on ("package"))
                (:file "events" :depends-on ("tools"))
-               (:file "nyx" :depends-on ("specials" "events"))))))
+               (:file "screen" :depends-on ("package"))
+               (:file "nyx" :depends-on ("specials" "events" "screen"))))))
 

@@ -22,7 +22,7 @@
 (defun run-shell-command (command args &key (output *standard-output*)
                           (wait t))
   "Execute COMMAND using ARGS."
-  (format t "Execute : ~A ~A~%" command args)
+  (format t "~%Execute : ~A ~A~%" command args)
   (sb-ext:process-exit-code
    (sb-ext:run-program 
     command args 
@@ -50,15 +50,25 @@
          (w (xlib:create-window :parent (xlib:screen-root screen)
                                 :background black
                                 :border white
-                                :event-mask '(:key-press
-                                              :key-release
+                                :event-mask '(:structure-notify
+                                              :property-change
+                                              :colormap-change
+                                              :focus-change
+                                              :pointer-motion
                                               :button-press
                                               :button-release
-                                              :exposure 
-                                              :pointer-motion)
+                                              :key-press
+                                              :key-release
+                                              :exposure
+                                              )
+;;;                                 '(:key-press
+;;;                                               :key-release
+;;;                                               :button-press
+;;;                                               :button-release
+;;;                                               :exposure 
+;;;                                               :pointer-motion)
                                 :x x :y y :width width :height height
-                                ;;:border-width 8))
-                                ))
+                                :border-width 1))
 ;;;          (gc (xlib:create-gcontext :drawable (xlib:screen-root screen)
 ;;;                                    :foreground white
 ;;;                                    :background black)))

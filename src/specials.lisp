@@ -31,7 +31,8 @@
 (defparameter *display* nil 
   "The XLib display.")
 
-
+(defparameter *screens* '()
+  "A list of all screens.")
 
 ;; Coordinates
 
