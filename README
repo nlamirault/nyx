@@ -1,4 +1,20 @@
+---------
 -- Nyx --
+---------
+
+Test Nyx :
+
+$> Xnest :1 -ac -kb
+
+
+$> sbcl
+*> (asdf:oos 'asdf:load-op 'nyx)
+*> (nyx::start-wm :display 1)
+
+
+
+
+
 
 
 Standards :
