@@ -15,14 +15,15 @@
 package xgb
 
 import (
+	"log"
+
 	"github.com/BurntSushi/xgbutil"
 	"github.com/BurntSushi/xgbutil/xevent"
+	// "github.com/nlamirault/nyx/wm"
 )
 
 func (xgb *Xgb) setupEvents() {
 	xevent.MapRequestFun(func(xu *xgbutil.XUtil, ev xevent.MapRequestEvent) {
-		// client := xclient.New(xgb.X, ev.Window, xgb.Events)
-		// xgb.Events.MapRequest(client)
+		log.Printf("[DEBUG] Setup events")
 	}).Connect(xgb.X, xgb.X.RootWin())
-
 }

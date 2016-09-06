@@ -22,11 +22,18 @@ import (
 )
 
 func (xgb *Xgb) setupRoot() error {
-	eventMask := xproto.EventMaskStructureNotify |
-		xproto.EventMaskSubstructureNotify |
+	// eventMask := xproto.EventMaskStructureNotify |
+	// 	xproto.EventMaskSubstructureNotify |
+	// 	xproto.EventMaskSubstructureRedirect |
+	// 	xproto.EventMaskEnterWindow
+	eventMask := xproto.EventMaskPropertyChange |
+		xproto.EventMaskFocusChange |
+		xproto.EventMaskButtonPress |
+		xproto.EventMaskButtonRelease |
+		xproto.EventMaskStructureNotify |
+		xproto.EventMaskSubstructureRedirect |
 		xproto.EventMaskSubstructureRedirect |
 		xproto.EventMaskEnterWindow
-
 	win := xwindow.New(xgb.X, xgb.X.RootWin())
 	if err := win.Listen(eventMask); err != nil {
 		return fmt.Errorf("Could not listen to root window events: %s",

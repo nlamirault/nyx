@@ -26,7 +26,7 @@ import (
 	"github.com/nlamirault/nyx/keybinds"
 	"github.com/nlamirault/nyx/logging"
 	"github.com/nlamirault/nyx/version"
-	"github.com/nlamirault/nyx/wm"
+	// "github.com/nlamirault/nyx/wm"
 	"github.com/nlamirault/nyx/xgb"
 )
 
@@ -63,12 +63,12 @@ func getTitle() string {
 }
 
 func setupWindowManager() {
-	wman, err := wm.NewWindowManager()
-	if err != nil {
-		log.Fatalf("[ERROR] Can't create the window manager: %v", err)
-	}
-	defer wman.Destroy()
-	wman.Add(wm.NewWorkspace("1"))
+	// wman, err := wm.NewWindowManager()
+	// if err != nil {
+	// 	log.Fatalf("[ERROR] Can't create the window manager: %v", err)
+	// }
+	// defer wman.Destroy()
+	// wman.Add(wm.NewWorkspace("1"))
 
 	xgb, err := xgb.New()
 	if err != nil {

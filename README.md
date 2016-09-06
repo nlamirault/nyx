@@ -22,11 +22,15 @@ You can download the binaries :
 
 ## Testing
 
-For testing, install [Xephyr][] on your system and run:
+To run and test it, you will need:
 
-    $ Xephyr -screen 800x600 :1 &
-    $ DISPLAY=:1 ./target/release/wtftw &
-    $ DISPLAY=:1 thunar & (or whatever application you want to run)
+* [Xephyr][]
+* xinit
+* Random X utilities such as xclock, xeyes, and xterm to play with
+
+Then run it:
+
+    $ nyx-test.sh
 
 
 ## Development
