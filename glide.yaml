@@ -1,0 +1,7 @@
+package: github.com/nlamirault/nyx
+import:
+- package: github.com/BurntSushi/xgb
+  subpackages:
+  - xproto
+- package: github.com/BurntSushi/xgbutil
+- package: github.com/hashicorp/logutils
