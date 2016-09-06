@@ -40,7 +40,7 @@ func New() (*Xgb, error) {
 
 func (xgb *Xgb) connect() error {
 	var err error
-	if xgb.X, err = xgbutil.NewConnDisplay(":1"); err != nil {
+	if xgb.X, err = xgbutil.NewConn(); err != nil {
 		return err
 	}
 
