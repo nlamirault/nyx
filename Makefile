@@ -117,6 +117,18 @@ binaries: gox ## Upload all binaries
 			"$(BINTRAY_URI)/content/$(BINTRAY_USERNAME)/$(BINTRAY_REPOSITORY)/$(APP)/${VERSION}/$$i;publish=1"; \
         done
 
+.PHONY: nyx
+nyx: ## Run Nyx using Xephir
+	Xephyr :1 -ac -screen 1024x748 &
+
+.PHONY: run
+run: ## Run app on Nyx
+	DISPLAY=:1 $(app)
+
+.PHONY: wm
+wm: ## Run nyx using Xephir and some applications
+	xinit ./xinitrc -- /usr/bin/Xephyr :100 -ac -screen 800x600 -host-cursor
+
 # for goprojectile
 .PHONY: gopath
 gopath:

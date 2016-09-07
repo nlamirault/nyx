@@ -23,11 +23,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/nlamirault/nyx/keybinds"
 	"github.com/nlamirault/nyx/logging"
 	"github.com/nlamirault/nyx/version"
-	// "github.com/nlamirault/nyx/wm"
-	"github.com/nlamirault/nyx/xgb"
+	"github.com/nlamirault/nyx/wm"
 )
 
 const (
@@ -62,26 +60,25 @@ func getTitle() string {
 	return fmt.Sprintf("%s - v%s", application, version.Version)
 }
 
-func setupWindowManager() {
-	// wman, err := wm.NewWindowManager()
-	// if err != nil {
-	// 	log.Fatalf("[ERROR] Can't create the window manager: %v", err)
-	// }
-	// defer wman.Destroy()
-	// wman.Add(wm.NewWorkspace("1"))
-
-	xgb, err := xgb.New()
-	if err != nil {
-		log.Fatalf("[ERROR] Can't create Xgb : %v", err)
-	}
-	defer xgb.Destroy()
-
+func setupWindowManager(flagDebug bool) {
 	defaultKeybindings := make(map[string]string)
 	defaultKeybindings["Mod4-return"] = "exec termite"
 	defaultKeybindings["Mod4-j"] = "exec terminator"
-	keybinds.New(xgb.X, defaultKeybindings)
+	defaultKeybindings["Mod4-Escape"] = "exit"
 
-	xgb.EnterMain()
+	xwm, err := wm.New(defaultKeybindings)
+	if err != nil {
+		log.Fatalf("[ERROR] Can't create window manager : %v", err)
+	}
+	defer xwm.Destroy()
+
+	// keybinds.New(xgb.X, defaultKeybindings)
+
+	// if flagDebug {
+	// 	xgb.Debug()
+	// }
+
+	xwm.Run()
 }
 
 func main() {
@@ -96,5 +93,5 @@ func main() {
 		logging.SetLogging("INFO")
 	}
 
-	setupWindowManager()
+	setupWindowManager(flagDebug)
 }

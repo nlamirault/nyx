@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Copyright (C) 2016 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,8 +18,8 @@
 
 # 1. Start some programs to play with.
 xclock &
-xeyes &
-sleep 2 && xterm &
+# xeyes &
+# sleep 2 && xterm &
 
 # 2. Start our window manager.
 exec ./nyx -d

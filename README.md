@@ -30,7 +30,11 @@ To run and test it, you will need:
 
 Then run it:
 
-    $ nyx-test.sh
+    $ make nyx
+
+Start an application:
+
+    $ make run app=xterm
 
 
 ## Development

@@ -65,14 +65,20 @@ func New(xu *xgbutil.XUtil, keys map[string]string) *Keybinds {
 	return kb
 }
 func (kb *Keybinds) keyPressFun(xu *xgbutil.XUtil, ev xevent.KeyPressEvent) {
-	log.Printf("[DEBUG] KeyPressEvent: %d, %d, %s",
-		ev.State, ev.Detail, keybind.LookupString(xu, ev.State, ev.Detail))
+	modStr := keybind.ModifierString(ev.State)
+	keyStr := keybind.LookupString(xu, ev.State, ev.Detail)
+	if len(modStr) > 0 {
+		log.Printf("[DEBUG] Key: %s-%s\n", modStr, keyStr)
+	} else {
+		log.Println("[DEBUG] Key:", keyStr)
+	}
 	for _, key := range kb.Keys {
-		// if key.Mods == ev.State && key.Code == ev.Detail {
 		if key.Code == ev.Detail {
 			log.Printf("[DEBUG] Execute command: %s", key.Cmd)
+			if key.Cmd == "exit" {
+				xevent.Quit(xu)
+			}
 			return
 		}
 	}
-	log.Printf("[WARN] Received key without keybind")
 }
