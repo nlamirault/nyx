@@ -122,7 +122,7 @@ nyx: ## Run Nyx using Xephir
 	Xephyr :1 -ac -screen 1024x748 &
 
 .PHONY: run
-run: ## Run app on Nyx
+run: ## Run app on Nyx (app=xxx)
 	DISPLAY=:1 $(app)
 
 .PHONY: wm
@@ -132,4 +132,4 @@ wm: ## Run nyx using Xephir and some applications
 # for goprojectile
 .PHONY: gopath
 gopath:
-	@echo GOPATH=`pwd`:`pwd`/vendor
+	@echo `pwd`:`pwd`/vendor
