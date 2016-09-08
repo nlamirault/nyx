@@ -73,7 +73,6 @@ func setupWindowManager(flagDebug bool) {
 	defer xwm.Destroy()
 
 	// keybinds.New(xgb.X, defaultKeybindings)
-
 	// if flagDebug {
 	// 	xgb.Debug()
 	// }

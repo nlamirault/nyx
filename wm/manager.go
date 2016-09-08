@@ -19,10 +19,10 @@ import (
 
 	"github.com/BurntSushi/xgb/xproto"
 	"github.com/BurntSushi/xgbutil"
+	"github.com/BurntSushi/xgbutil/keybind"
 	"github.com/BurntSushi/xgbutil/xevent"
 	"github.com/BurntSushi/xgbutil/xwindow"
-
-	"github.com/nlamirault/nyx/keybinds"
+	// "github.com/nlamirault/nyx/keybinds"
 )
 
 type WindowManager struct {
@@ -67,9 +67,9 @@ func New(keybindings map[string]string) (*WindowManager, error) {
 	// }
 	// bar.Draw()
 
-	keybinds.New(wm.X, keybindings)
+	// keybinds.New(wm.X, keybindings)
 
-	// keybind.Initialize(x)
+	keybind.Initialize(x)
 
 	xevent.MapRequestFun(wm.mapRequestHandler).Connect(x, x.RootWin())
 	xevent.ConfigureRequestFun(wm.configureRequestHandler).Connect(x, x.RootWin())
@@ -88,10 +88,7 @@ func New(keybindings map[string]string) (*WindowManager, error) {
 	// 	panic(err)
 	// }
 
-	// err = keybind.KeyPressFun(onExecLauncher).Connect(x, x.RootWin(), "Mod4-e", true)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	err = keybind.KeyPressFun(wm.exitKeyPressHandler).Connect(x, x.RootWin(), "Mod4-e", true)
 
 	return wm, nil
 }
@@ -143,4 +140,9 @@ func (wm *WindowManager) mapRequestHandler(x *xgbutil.XUtil, e xevent.MapRequest
 
 func (wm *WindowManager) configureRequestHandler(x *xgbutil.XUtil, ev xevent.ConfigureRequestEvent) {
 	log.Printf("[DEBUG] Event configure request")
+}
+
+func (wm *WindowManager) exitKeyPressHandler(x *xgbutil.XUtil, e xevent.KeyPressEvent) {
+	log.Printf("[DEBUG] Event keypress exit")
+	xevent.Quit(x)
 }
