@@ -1,4 +1,4 @@
-// Copyright (C) 2016  Nicolas Lamirault <nicolas.lamirault@gmail.com>
+// Copyright (C) 2016, 2017 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,15 +17,15 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"path"
 	"runtime"
 	"strings"
 
-	"github.com/nlamirault/nyx/logging"
+	"github.com/golang/glog"
+	"github.com/mikkeloscar/go-wlc"
+
 	"github.com/nlamirault/nyx/version"
-	"github.com/nlamirault/nyx/wm"
 )
 
 const (
@@ -40,9 +40,7 @@ var (
 
 func init() {
 	// parse flags
-	flag.BoolVar(&flagDebug, "d", false, "run in debug mode")
-	flag.BoolVar(&flagVersion, "v", false, "show version")
-	flag.BoolVar(&flagReplace, "replace", false, "If another window manager is running, replace it.")
+	flag.BoolVar(&flagVersion, "version", false, "show version")
 	flag.Usage = usage
 	flag.Parse()
 }
@@ -56,28 +54,8 @@ func usage() {
 	os.Exit(1)
 }
 
-func getTitle() string {
-	return fmt.Sprintf("%s - v%s", application, version.Version)
-}
-
-func setupWindowManager(flagDebug bool) {
-	defaultKeybindings := make(map[string]string)
-	defaultKeybindings["Mod4-return"] = "exec termite"
-	defaultKeybindings["Mod4-j"] = "exec terminator"
-	defaultKeybindings["Mod4-Escape"] = "exit"
-
-	xwm, err := wm.New(defaultKeybindings)
-	if err != nil {
-		log.Fatalf("[ERROR] Can't create window manager : %v", err)
-	}
-	defer xwm.Destroy()
-
-	// keybinds.New(xgb.X, defaultKeybindings)
-	// if flagDebug {
-	// 	xgb.Debug()
-	// }
-
-	xwm.Run()
+func log(typ wlc.LogType, str string) {
+	glog.V(2).Infof("%d: %s\n", typ, str)
 }
 
 func main() {
@@ -86,11 +64,14 @@ func main() {
 		fmt.Printf("%s v%s\n", application, version.Version)
 		os.Exit(0)
 	}
-	if flagDebug {
-		logging.SetLogging("DEBUG")
-	} else {
-		logging.SetLogging("INFO")
+
+	glog.Infof("Nyx starting")
+
+	wlc.LogSetHandler(log)
+	if !wlc.Init() {
+		os.Exit(1)
 	}
 
-	setupWindowManager(flagDebug)
+	wlc.Run()
+	os.Exit(0)
 }

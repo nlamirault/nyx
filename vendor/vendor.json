@@ -1,0 +1,19 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "HmbftipkadrLlCfzzVQ+iFHbl6g=",
+			"path": "github.com/golang/glog",
+			"revision": "23def4e6c14b4da8ac2ed8007337bc5eb5007998",
+			"revisionTime": "2016-01-25T20:49:56Z"
+		},
+		{
+			"checksumSHA1": "5hMEpbntL6yP4cfN4d4rir4n1Qc=",
+			"path": "github.com/mikkeloscar/go-wlc",
+			"revision": "b5f9b305b23ecb4d2fa44faa3ba684d3a1fa332e",
+			"revisionTime": "2017-01-22T10:48:40Z"
+		}
+	],
+	"rootPath": "github.com/nlamirault/nyx"
+}

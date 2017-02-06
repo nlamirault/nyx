@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2016 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+# Copyright (C) 2016, 2017 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 # xinitrc file for testing our window manager.
 
 # 1. Start some programs to play with.
-xclock &
-# xeyes &
-# sleep 2 && xterm &
+#xclock &
+xeyes &
+xterm &
 
 # 2. Start our window manager.
-exec ./nyx -d
+exec ./nyx --v=2 --logtostderr="true"

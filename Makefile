@@ -1,4 +1,4 @@
-# Copyright (C) 2016 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+# Copyright (C) 2016, 2017 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ DIR = $(shell pwd)
 DOCKER = docker
 
 GO = go
-GLIDE = glide
 
 GOX = gox -os="linux darwin windows freebsd openbsd netbsd"
 
@@ -38,7 +37,7 @@ MAKE_COLOR=\033[33;01m%-20s\033[0m
 
 MAIN = github.com/nlamirault/nyx
 SRCS = $(shell git ls-files '*.go' | grep -v '^vendor/')
-PKGS = $(shell glide novendor)
+
 EXE = nyx
 
 VERSION=$(shell \
@@ -65,7 +64,7 @@ clean: ## Cleanup
 init: ## Install requirements
 	@echo -e "$(OK_COLOR)[$(APP)] Install requirements$(NO_COLOR)"
 	@go get -u github.com/golang/glog
-	@go get -u github.com/Masterminds/glide
+	@go get -u github.com/kardianos/govendor
 	@go get -u github.com/Masterminds/rmvcsdir
 	@go get -u github.com/golang/lint/golint
 	@go get -u github.com/kisielk/errcheck
@@ -85,24 +84,24 @@ build: ## Make binary
 .PHONY: test
 test: ## Launch unit tests
 	@echo -e "$(OK_COLOR)[$(APP)] Launch unit tests $(NO_COLOR)"
-	@$(GO) test -v $$(glide nv)
+	@govendor test +local
 
-.PHONY: lint
-lint: ## Launch golint
-	@$(foreach file,$(SRCS),golint $(file) || exit;)
+# .PHONY: lint
+# lint: ## Launch golint
+# 	@$(foreach file,$(SRCS),golint $(file) || exit;)
 
-.PHONY: vet
-vet: ## Launch go vet
-	@$(foreach file,$(SRCS),$(GO) vet $(file) || exit;)
+# .PHONY: vet
+# vet: ## Launch go vet
+# 	@$(foreach file,$(SRCS),$(GO) vet $(file) || exit;)
 
-.PHONY: errcheck
-errcheck: ## Launch go errcheck
-	@echo -e "$(OK_COLOR)[$(APP)] Go Errcheck $(NO_COLOR)"
-	@$(foreach pkg,$(PKGS),errcheck $(pkg) $(glide novendor) || exit;)
+# .PHONY: errcheck
+# errcheck: ## Launch go errcheck
+# 	@echo -e "$(OK_COLOR)[$(APP)] Go Errcheck $(NO_COLOR)"
+# 	@$(foreach pkg,$(PKGS),errcheck $(pkg) $(glide novendor) || exit;)
 
-.PHONY: coverage
-coverage: ## Launch code coverage
-	@$(foreach pkg,$(PKGS),$(GO) test -cover $(pkg) $(glide novendor) || exit;)
+# .PHONY: coverage
+# coverage: ## Launch code coverage
+# 	@$(foreach pkg,$(PKGS),$(GO) test -cover $(pkg) $(glide novendor) || exit;)
 
 gox: ## Make all binaries
 	@echo -e "$(OK_COLOR)[$(APP)] Create binaries $(NO_COLOR)"
