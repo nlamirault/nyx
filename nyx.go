@@ -25,6 +25,7 @@ import (
 	"github.com/golang/glog"
 	"github.com/mikkeloscar/go-wlc"
 
+	"github.com/nlamirault/nyx/compositor"
 	"github.com/nlamirault/nyx/version"
 )
 
@@ -55,7 +56,7 @@ func usage() {
 }
 
 func log(typ wlc.LogType, str string) {
-	glog.V(2).Infof("%d: %s\n", typ, str)
+	glog.V(2).Infof("Log: %d: %s\n", typ, str)
 }
 
 func main() {
@@ -71,6 +72,25 @@ func main() {
 	if !wlc.Init() {
 		os.Exit(1)
 	}
+
+	// Create the Wayland compositor
+	compositor, err := compositor.New()
+	if err != nil {
+		glog.Fatalf("Can't create compositor: %s", err)
+	}
+
+	wlc.SetOutputResolutionCb(compositor.OutputResolution)
+
+	wlc.SetViewCreatedCb(compositor.ViewCreated)
+	wlc.SetViewDestroyedCb(compositor.ViewDestroyed)
+	wlc.SetViewFocusCb(compositor.ViewFocus)
+	wlc.SetViewRequestMoveCb(compositor.ViewRequestMove)
+	wlc.SetViewRequestResizeCb(compositor.ViewRequestResize)
+
+	wlc.SetKeyboardKeyCb(compositor.KeyboardKey)
+
+	wlc.SetPointerButtonCb(compositor.PointerButton)
+	wlc.SetPointerMotionCb(compositor.PointerMotion)
 
 	wlc.Run()
 	os.Exit(0)
