@@ -10,6 +10,10 @@ Develop :
 
 A window manager writtent in Go and using the XCB wrappers.
 
+Currently he can not do anything.
+
+![screenshot](nyx-0.1.0.png)
+
 ## Installation
 
 You can download the binaries :
@@ -34,7 +38,7 @@ Then run it:
 
 Then:
 
-    $ DISPLAY=:1 nyx
+    $ DISPLAY=:1 ./nyx -config nyx.toml -alsologtostderr -v 2
 
 And start an application:
 

@@ -29,11 +29,11 @@ type Window struct {
 	workspaceId xproto.Window
 }
 
-func newWindow(x *xgbutil.XUtil, workspaceId xproto.Window, id xproto.Window) *Window {
+func newWindow(x *xgbutil.XUtil, workspaceId xproto.Window, id xproto.Window) (*Window, error) {
 	child := xwindow.New(x, id)
 	pw, err := xwindow.Generate(x)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	win := Window{
@@ -46,24 +46,20 @@ func newWindow(x *xgbutil.XUtil, workspaceId xproto.Window, id xproto.Window) *W
 	win.bindEvents()
 	win.reparentChild()
 	win.Activate()
-
-	return &win
+	return &win, nil
 }
 
 func (w *Window) reparentChild() error {
 	cg, err := w.child.Geometry()
 	if err != nil {
-		panic(err)
-	}
-
-	err = w.parent.CreateChecked(w.workspaceId, cg.X()+100, cg.Y()+100,
-		cg.Width()+8, cg.Height()+8, xproto.CwBackPixel, 0x111111)
-	if err != nil {
 		return err
 	}
 
-	err = xproto.ReparentWindowChecked(w.X.Conn(), w.child.Id, w.parent.Id, 4, 4).Check()
-	if err != nil {
+	if err := w.parent.CreateChecked(w.workspaceId, cg.X(), cg.Y(), cg.Width()*2, cg.Height()*2, xproto.CwBackPixel, 0x111111); err != nil {
+		return err
+	}
+
+	if err := xproto.ReparentWindowChecked(w.X.Conn(), w.child.Id, w.parent.Id, 0, 0).Check(); err != nil {
 		return err
 	}
 
@@ -72,11 +68,9 @@ func (w *Window) reparentChild() error {
 
 func (w *Window) bindEvents() {
 	evMask := xproto.EventMaskStructureNotify
-
 	if err := w.child.Listen(evMask); err != nil {
 		panic(err)
 	}
-
 	xevent.DestroyNotifyFun(func(x *xgbutil.XUtil, e xevent.DestroyNotifyEvent) {
 		w.Destroy()
 	}).Connect(w.X, w.child.Id)

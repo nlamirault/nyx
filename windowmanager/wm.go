@@ -15,6 +15,8 @@
 package windowmanager
 
 import (
+	"os"
+
 	"github.com/BurntSushi/xgb/xproto"
 	"github.com/BurntSushi/xgbutil"
 	"github.com/BurntSushi/xgbutil/keybind"
@@ -23,6 +25,10 @@ import (
 	"github.com/golang/glog"
 
 	"github.com/nlamirault/nyx/config"
+)
+
+const (
+	displayEnv = "DISPLAY"
 )
 
 type WindowManager struct {
@@ -35,7 +41,7 @@ type WindowManager struct {
 func New(conf *config.Configuration) (*WindowManager, error) {
 	glog.V(2).Infof("Create the window manager")
 
-	x, err := xgbutil.NewConnDisplay(":1")
+	x, err := xgbutil.NewConnDisplay(os.Getenv(displayEnv))
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +69,7 @@ func New(conf *config.Configuration) (*WindowManager, error) {
 		xproto.EventMaskSubstructureRedirect
 
 	if err := root.Listen(evMasks); err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	keybind.Initialize(x)
@@ -115,14 +121,17 @@ func (wm *WindowManager) onMapRequest(x *xgbutil.XUtil, e xevent.MapRequestEvent
 	x.Grab()
 	defer x.Ungrab()
 
-	w := newWindow(x, wm.activeWorkspace().WindowId(), e.Window)
+	w, err := newWindow(x, wm.activeWorkspace().WindowId(), e.Window)
+	if err != nil {
+		glog.Errorf("Can't create windows: %s", err)
+		return
+	}
 	w.Draw()
 }
 
 func (wm *WindowManager) onConfigureRequest(x *xgbutil.XUtil, e xevent.ConfigureRequestEvent) {
 	glog.V(2).Infof("Event: configure request: %s", e)
-	xwindow.New(x, e.Window).Configure(int(e.ValueMask), int(e.X), int(e.Y),
-		int(e.Width), int(e.Height), e.Sibling, e.StackMode)
+	xwindow.New(x, e.Window).Configure(int(e.ValueMask), int(e.X), int(e.Y), int(e.Width), int(e.Height), e.Sibling, e.StackMode)
 }
 
 func (wm *WindowManager) Run() {

@@ -5,6 +5,10 @@ closeWindow = "Mod4-w"
 execLauncher = "Mod4-r"
 nextWorkspace = "Mod4-n"
 previousWorkspace = "Mod4-p"
+parentFocusLeft = "Mod4-Ctrl-h"
+parentFocusRight = "Mod4-Ctrl-l"
+parentFocusDown = "Mod4-Ctrl-j"
+parentFocusUp = "Mod4-Ctrl-k"
 
 [workspaces]
 
