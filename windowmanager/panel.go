@@ -134,13 +134,11 @@ func drawWorkspace(x *xgbutil.XUtil, p *xwindow.Window, n string, xPos, yPos int
 
 func runClock(x *xgbutil.XUtil, p *xwindow.Window) {
 	ticker := time.NewTicker(1 * time.Second)
-
-	drawClock(x, p)
-
+	// drawClock(x, p)
 	go func() {
 		for _ = range ticker.C {
 			if err := drawClock(x, p); err != nil {
-				glog.Warnf("Can't render clock: %s", err)
+				glog.Infof("Can't render clock: %s", err)
 			}
 		}
 	}()

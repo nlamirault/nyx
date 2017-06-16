@@ -68,6 +68,9 @@ func New(conf *config.Configuration) (*WindowManager, error) {
 
 	keybind.Initialize(x)
 
+	xevent.MapRequestFun(wm.onMapRequest).Connect(x, x.RootWin())
+	xevent.ConfigureRequestFun(wm.onConfigureRequest).Connect(x, x.RootWin())
+
 	if err := keybind.KeyPressFun(wm.onActivateNextWorkspace).Connect(x, x.RootWin(), conf.Keybindings.NextWorkspace, true); err != nil {
 		return nil, err
 	}
@@ -98,13 +101,28 @@ func (wm *WindowManager) activeWorkspace() *Workspace {
 // }
 
 func (wm *WindowManager) onActivateNextWorkspace(x *xgbutil.XUtil, e xevent.KeyPressEvent) {
-	glog.V(2).Info("Event: next workspace")
+	glog.V(2).Infof("Event: next workspace: %s", e)
 	wm.WorkspaceManager.Activate(wm.WorkspaceManager.NextIndex())
 }
 
 func (wm *WindowManager) onActivatePreviousWorkspace(x *xgbutil.XUtil, e xevent.KeyPressEvent) {
-	glog.V(2).Info("Event: previous workspace")
+	glog.V(2).Infof("Event: previous workspace: %s", e)
 	wm.WorkspaceManager.Activate(wm.WorkspaceManager.PreviousIndex())
+}
+
+func (wm *WindowManager) onMapRequest(x *xgbutil.XUtil, e xevent.MapRequestEvent) {
+	glog.V(2).Infof("Event: map request: %s", e)
+	x.Grab()
+	defer x.Ungrab()
+
+	w := newWindow(x, wm.activeWorkspace().WindowId(), e.Window)
+	w.Draw()
+}
+
+func (wm *WindowManager) onConfigureRequest(x *xgbutil.XUtil, e xevent.ConfigureRequestEvent) {
+	glog.V(2).Infof("Event: configure request: %s", e)
+	xwindow.New(x, e.Window).Configure(int(e.ValueMask), int(e.X), int(e.Y),
+		int(e.Width), int(e.Height), e.Sibling, e.StackMode)
 }
 
 func (wm *WindowManager) Run() {
