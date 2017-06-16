@@ -30,9 +30,13 @@ To run and test it, you will need:
 
 Then run it:
 
-    $ make nyx
+    $ make xephyr
 
-Start an application:
+Then:
+
+    $ DISPLAY=:1 nyx
+
+And start an application:
 
     $ make run app=xterm
 

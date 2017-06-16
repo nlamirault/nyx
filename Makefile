@@ -1,4 +1,4 @@
-# Copyright (C) 2016 Nicolas Lamirault <nicolas.lamirault@gmail.com>
+# Copyright (C) 2016, 2017 Nicolas Lamirault <nicolas.lamirault@gmail.com>
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -117,8 +117,8 @@ binaries: gox ## Upload all binaries
 			"$(BINTRAY_URI)/content/$(BINTRAY_USERNAME)/$(BINTRAY_REPOSITORY)/$(APP)/${VERSION}/$$i;publish=1"; \
         done
 
-.PHONY: nyx
-nyx: ## Run Nyx using Xephir
+.PHONY: xephyr
+xephyr: ## Run Xephyr
 	Xephyr :1 -ac -screen 1024x748 &
 
 .PHONY: run

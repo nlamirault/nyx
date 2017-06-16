@@ -1,4 +1,4 @@
-// Copyright (C) 2016  Nicolas Lamirault <nicolas.lamirault@gmail.com>
+// Copyright (C) 2016, 2017  Nicolas Lamirault <nicolas.lamirault@gmail.com>
 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,80 +17,58 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
-	"path"
 	"runtime"
-	"strings"
 
-	"github.com/nlamirault/nyx/logging"
+	"github.com/golang/glog"
+
+	"github.com/nlamirault/nyx/config"
 	"github.com/nlamirault/nyx/version"
-	"github.com/nlamirault/nyx/wm"
+	"github.com/nlamirault/nyx/windowmanager"
 )
 
 const (
-	application = "Nyx"
+	app = "nyx"
 )
 
 var (
-	flagDebug   bool
-	flagVersion bool
-	flagReplace bool
+	vrs        bool
+	configFile string
 )
 
 func init() {
 	// parse flags
-	flag.BoolVar(&flagDebug, "d", false, "run in debug mode")
-	flag.BoolVar(&flagVersion, "v", false, "show version")
-	flag.BoolVar(&flagReplace, "replace", false, "If another window manager is running, replace it.")
-	flag.Usage = usage
-	flag.Parse()
-}
-
-func usage() {
-	fmt.Fprintf(os.Stderr, "Usage: %s [flags]\n", path.Base(os.Args[0]))
-	flag.VisitAll(func(fg *flag.Flag) {
-		fmt.Printf("--%s=\"%s\"\n\t%s\n", fg.Name, fg.DefValue,
-			strings.Replace(fg.Usage, "\n", "\n\t", -1))
-	})
-	os.Exit(1)
-}
-
-func getTitle() string {
-	return fmt.Sprintf("%s - v%s", application, version.Version)
-}
-
-func setupWindowManager(flagDebug bool) {
-	defaultKeybindings := make(map[string]string)
-	defaultKeybindings["Mod4-return"] = "exec termite"
-	defaultKeybindings["Mod4-j"] = "exec terminator"
-	defaultKeybindings["Mod4-Escape"] = "exit"
-
-	xwm, err := wm.New(defaultKeybindings)
-	if err != nil {
-		log.Fatalf("[ERROR] Can't create window manager : %v", err)
+	flag.BoolVar(&vrs, "version", false, "print version and exit")
+	flag.StringVar(&configFile, "config", "", "Configuration file to use.")
+	flag.Usage = func() {
+		fmt.Fprint(os.Stderr, fmt.Sprintf("%s - v%s\n", app, version.Version))
+		flag.PrintDefaults()
 	}
-	defer xwm.Destroy()
 
-	// keybinds.New(xgb.X, defaultKeybindings)
-	// if flagDebug {
-	// 	xgb.Debug()
-	// }
+	flag.Parse()
 
-	xwm.Run()
+	if vrs {
+		fmt.Printf("%s\n", version.Version)
+		os.Exit(0)
+	}
+	if len(configFile) == 0 {
+		fmt.Printf("Configuration file must not be empty.\n")
+		os.Exit(1)
+	}
+
 }
 
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	if flagVersion {
-		fmt.Printf("%s v%s\n", application, version.Version)
-		os.Exit(0)
-	}
-	if flagDebug {
-		logging.SetLogging("DEBUG")
-	} else {
-		logging.SetLogging("INFO")
+	conf, err := config.LoadFileConfig(configFile)
+	if err != nil {
+		glog.Fatalf("Failed to load configuration: %s", err)
 	}
 
-	setupWindowManager(flagDebug)
+	wm, err := windowmanager.New(conf)
+	if err != nil {
+		glog.Fatalf("Failed to create the window manager: %s", err)
+	}
+	glog.V(2).Infof("Starting Nyx...")
+	wm.Run()
 }
