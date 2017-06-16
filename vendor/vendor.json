@@ -3,6 +3,42 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "5jHpJtUNxnL8p/YP3CVl2YRv6MI=",
+			"path": "github.com/BurntSushi/freetype-go/freetype",
+			"revision": "b763ddbfe298bf71c999a2833470da508f3a0677",
+			"revisionTime": "2016-01-29T22:04:10Z"
+		},
+		{
+			"checksumSHA1": "mE/gxURPowl6cCHMcgIntvD5dfw=",
+			"path": "github.com/BurntSushi/freetype-go/freetype/raster",
+			"revision": "b763ddbfe298bf71c999a2833470da508f3a0677",
+			"revisionTime": "2016-01-29T22:04:10Z"
+		},
+		{
+			"checksumSHA1": "bxotXHWXYbcrFFqQpTxAOFFyEqc=",
+			"path": "github.com/BurntSushi/freetype-go/freetype/truetype",
+			"revision": "b763ddbfe298bf71c999a2833470da508f3a0677",
+			"revisionTime": "2016-01-29T22:04:10Z"
+		},
+		{
+			"checksumSHA1": "JBBEEsi062hiA4a/carr5yVcq+M=",
+			"path": "github.com/BurntSushi/graphics-go/graphics",
+			"revision": "b43f31a4a96688fba0b612e25e22648b9267e498",
+			"revisionTime": "2016-01-29T21:57:08Z"
+		},
+		{
+			"checksumSHA1": "ipSnkzADIZ9UHtmKeTWkAX2sXKQ=",
+			"path": "github.com/BurntSushi/graphics-go/graphics/convolve",
+			"revision": "b43f31a4a96688fba0b612e25e22648b9267e498",
+			"revisionTime": "2016-01-29T21:57:08Z"
+		},
+		{
+			"checksumSHA1": "m2Oelnt8z6kpBi2klQvBetw5wLc=",
+			"path": "github.com/BurntSushi/graphics-go/graphics/interp",
+			"revision": "b43f31a4a96688fba0b612e25e22648b9267e498",
+			"revisionTime": "2016-01-29T21:57:08Z"
+		},
+		{
 			"checksumSHA1": "pPH/BoINXxzYDObljpsGZbysMrw=",
 			"path": "github.com/BurntSushi/toml",
 			"revision": "b26d9c308763d68093482582cea63d69be07a0f0",
@@ -69,6 +105,12 @@
 			"revisionTime": "2016-09-19T17:57:55Z"
 		},
 		{
+			"checksumSHA1": "8Bma5AnQM35pJQYMH68JroZdD3s=",
+			"path": "github.com/BurntSushi/xgbutil/xgraphics",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
 			"checksumSHA1": "XM/lsE8N2KXyfQr12TomgXqUsGk=",
 			"path": "github.com/BurntSushi/xgbutil/xprop",
 			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
@@ -91,6 +133,12 @@
 			"path": "github.com/golang/glog",
 			"revision": "23def4e6c14b4da8ac2ed8007337bc5eb5007998",
 			"revisionTime": "2016-01-25T20:49:56Z"
+		},
+		{
+			"checksumSHA1": "1lHVWDhMoJbpFcLP3B03VR1aPrk=",
+			"path": "github.com/martine/gocairo/cairo",
+			"revision": "ddd30f837497f6fcfe5e3c3665b97d7c17d381fe",
+			"revisionTime": "2016-02-22T16:52:15Z"
 		}
 	],
 	"rootPath": "github.com/nlamirault/nyx"
