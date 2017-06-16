@@ -47,6 +47,12 @@ func New(conf *config.Configuration) (*WindowManager, error) {
 	wm.WorkspaceManager.Add(x, conf)
 	wm.WorkspaceManager.Activate(0)
 
+	panel, err := newPanel(x, wm)
+	if err != nil {
+		return nil, err
+	}
+	panel.Run()
+
 	root := xwindow.New(x, x.RootWin())
 	evMasks := xproto.EventMaskPropertyChange |
 		xproto.EventMaskFocusChange |
@@ -81,20 +87,24 @@ func (wm *WindowManager) activeWorkspace() *Workspace {
 	return wm.WorkspaceManager.Workspaces[wm.WorkspaceManager.ActiveIndex()]
 }
 
-func (wm *WindowManager) activateNextWorkspace() {
+// func (wm *WindowManager) activateNextWorkspace() {
+// 	glog.V(2).Info("Event: next workspace")
+// 	wm.WorkspaceManager.Activate(wm.WorkspaceManager.NextIndex())
+// }
+
+// func (wm *WindowManager) activatePreviousWorkspace() {
+// 	glog.V(2).Info("Event: previous workspace")
+// 	wm.WorkspaceManager.Activate(wm.WorkspaceManager.PreviousIndex())
+// }
+
+func (wm *WindowManager) onActivateNextWorkspace(x *xgbutil.XUtil, e xevent.KeyPressEvent) {
+	glog.V(2).Info("Event: next workspace")
 	wm.WorkspaceManager.Activate(wm.WorkspaceManager.NextIndex())
 }
 
-func (wm *WindowManager) activatePreviousWorkspace() {
-	wm.WorkspaceManager.Activate(wm.WorkspaceManager.PreviousIndex())
-}
-
-func (wm *WindowManager) onActivateNextWorkspace(x *xgbutil.XUtil, e xevent.KeyPressEvent) {
-	wm.activateNextWorkspace()
-}
-
 func (wm *WindowManager) onActivatePreviousWorkspace(x *xgbutil.XUtil, e xevent.KeyPressEvent) {
-	wm.activatePreviousWorkspace()
+	glog.V(2).Info("Event: previous workspace")
+	wm.WorkspaceManager.Activate(wm.WorkspaceManager.PreviousIndex())
 }
 
 func (wm *WindowManager) Run() {

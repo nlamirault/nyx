@@ -16,6 +16,7 @@ package windowmanager
 
 import (
 	"github.com/BurntSushi/xgbutil"
+	"github.com/golang/glog"
 
 	"github.com/nlamirault/nyx/config"
 )
@@ -31,7 +32,8 @@ func newWorkspaceManager(initialCount int) *WorkspaceManager {
 	}
 }
 func (wm *WorkspaceManager) Add(x *xgbutil.XUtil, conf *config.Configuration) error {
-	for _, wsConf := range conf.Workspaces {
+	for name, wsConf := range conf.Workspaces {
+		glog.V(2).Infof("Add workspace: %s", name)
 		workspace, err := newWorkspace(x, &wsConf)
 		if err != nil {
 			return err
@@ -46,7 +48,6 @@ func (wm *WorkspaceManager) Names() []string {
 	for _, ws := range wm.Workspaces {
 		names = append(names, ws.Name())
 	}
-
 	return names
 }
 
@@ -55,17 +56,14 @@ func (wm *WorkspaceManager) NextIndex() int {
 	if wm.activeIndex != len(wm.Workspaces)-1 {
 		index = wm.activeIndex + 1
 	}
-
 	return index
 }
 
 func (wm *WorkspaceManager) PreviousIndex() int {
 	index := wm.activeIndex - 1
-
 	if index == -1 {
 		index = len(wm.Workspaces) - 1
 	}
-
 	return index
 }
 

@@ -15,6 +15,8 @@
 package windowmanager
 
 import (
+	// "fmt"
+
 	"github.com/BurntSushi/xgb/xproto"
 	"github.com/BurntSushi/xgbutil"
 	"github.com/BurntSushi/xgbutil/xwindow"
@@ -44,7 +46,8 @@ func newWorkspace(x *xgbutil.XUtil, conf *config.Workspace) (*Workspace, error) 
 	}
 	return &Workspace{
 		window: ws,
-		name:   conf.Name,
+		// name:   fmt.Sprintf("%s %s", conf.Icon, conf.Name),
+		name: conf.Name,
 	}, nil
 }
 
