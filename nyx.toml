@@ -1,0 +1,21 @@
+# Nyx configuration file
+
+[keybindings]
+closeWindow = "Mod4-w"
+execLauncher = "Mod4-r"
+nextWorkspace = "Mod4-n"
+previousWorkspace = "Mod4-p"
+
+[workspaces]
+
+[workspaces.main]
+name = "Main"
+icon = ""
+
+[workspaces.web]
+name = "Web"
+icon = ""
+
+[workspaces.media]
+name = "Media"
+icon = ""
