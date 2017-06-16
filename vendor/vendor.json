@@ -1,0 +1,97 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "pPH/BoINXxzYDObljpsGZbysMrw=",
+			"path": "github.com/BurntSushi/toml",
+			"revision": "b26d9c308763d68093482582cea63d69be07a0f0",
+			"revisionTime": "2017-03-28T06:15:53Z"
+		},
+		{
+			"checksumSHA1": "AcWCvzWyeJdc1Iw/Gw6upQPsroE=",
+			"path": "github.com/BurntSushi/xgb",
+			"revision": "27f122750802c950b2c869a5b63dafcf590ced95",
+			"revisionTime": "2016-05-22T18:18:43Z"
+		},
+		{
+			"checksumSHA1": "mK63DU8dTzBXLzqFBzcvL5SdbE4=",
+			"path": "github.com/BurntSushi/xgb/shape",
+			"revision": "27f122750802c950b2c869a5b63dafcf590ced95",
+			"revisionTime": "2016-05-22T18:18:43Z"
+		},
+		{
+			"checksumSHA1": "sWm96ySPr8q8tbvkzbEDBJRdLXU=",
+			"path": "github.com/BurntSushi/xgb/xinerama",
+			"revision": "27f122750802c950b2c869a5b63dafcf590ced95",
+			"revisionTime": "2016-05-22T18:18:43Z"
+		},
+		{
+			"checksumSHA1": "i8V/eYv4tGJs3tL6lpz7IEvRYVs=",
+			"path": "github.com/BurntSushi/xgb/xproto",
+			"revision": "27f122750802c950b2c869a5b63dafcf590ced95",
+			"revisionTime": "2016-05-22T18:18:43Z"
+		},
+		{
+			"checksumSHA1": "fyh8mzTvElhiDUHWf76i1NSW/m0=",
+			"path": "github.com/BurntSushi/xgbutil",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "UQ9KwrX27Ayl+O86OEmgiQj7CFQ=",
+			"path": "github.com/BurntSushi/xgbutil/ewmh",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "3mnso7wP3hR6OMM5F7FSu6ddkyU=",
+			"path": "github.com/BurntSushi/xgbutil/icccm",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "gmQkBnwjfhY9lzdOYpVJrHAYung=",
+			"path": "github.com/BurntSushi/xgbutil/keybind",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "HjemJw0HP9bQD8lOwXEBG2xwVdA=",
+			"path": "github.com/BurntSushi/xgbutil/mousebind",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "GT3D5BQByrDfNqghUY226WfcY3g=",
+			"path": "github.com/BurntSushi/xgbutil/xevent",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "XM/lsE8N2KXyfQr12TomgXqUsGk=",
+			"path": "github.com/BurntSushi/xgbutil/xprop",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "hONdzcyTCFaye2BE3FjNmbAe0I8=",
+			"path": "github.com/BurntSushi/xgbutil/xrect",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "H+MsBF0xAFhBwo31GAi08cxUfAk=",
+			"path": "github.com/BurntSushi/xgbutil/xwindow",
+			"revision": "f7c97cef3b4e6c88280a5a7091c3314e815ca243",
+			"revisionTime": "2016-09-19T17:57:55Z"
+		},
+		{
+			"checksumSHA1": "HmbftipkadrLlCfzzVQ+iFHbl6g=",
+			"path": "github.com/golang/glog",
+			"revision": "23def4e6c14b4da8ac2ed8007337bc5eb5007998",
+			"revisionTime": "2016-01-25T20:49:56Z"
+		}
+	],
+	"rootPath": "github.com/nlamirault/nyx"
+}
